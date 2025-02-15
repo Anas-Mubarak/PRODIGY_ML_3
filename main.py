@@ -52,7 +52,16 @@ xtrain,xtest,ytrain,ytest = train_test_split(imgn,lab,test_size=0.2)
 reg = SVC(kernel='rbf', C=1, gamma='scale')
 reg.fit(xtrain,ytrain)
 
-#predicting
+'''#predicting uncomment to check accuracy
 pr = reg.predict(xtest)
 accuracy = accuracy_score(ytest, pr)
-print(f"Accuracy: {accuracy}")
+print(f"Accuracy: {accuracy}")'''
+
+o_t_img = cv2.imread("Cat/1.jpg", cv2.IMREAD_GRAYSCALE)
+t_img=cv2.resize(o_t_img,(64,64))
+
+#Give an image path here
+hog_features = hog(t_img, orientations=8, pixels_per_cell=(8, 8), cells_per_block=(1, 1), visualize=False)
+print(f"The image is of a :{reg.predict(np.array([hog_features]))}")
+cv2.imshow("image",o_t_img)
+cv2.waitKey(7000)
